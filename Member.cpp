@@ -31,9 +31,10 @@ Member::~Member()
 void Member::follow(Member& mem) 
 {
 	//Maps have unique keys!
-	if (m_follow.find(mem.m_id) == m_follow.end()) // Means not found mem.m_id
+	if (mem.m_id != this->m_id && m_follow.find(mem.m_id) == m_follow.end()) // Means not found mem.m_id
 	{
-		auto r_value = m_follow.insert(std::pair<size_t, Member*>(mem.m_id, &mem));
+		std::pair<size_t, Member*> mem_pair = std::pair<size_t, Member*>(mem.m_id, &mem);
+		auto r_value = this->m_follow.insert(mem_pair);
 		mem.m_followedBy.insert(std::pair<size_t, Member*>(this->m_id, this));
 		//can be done with move constructor make_pair;
 		//std::make_pair()
